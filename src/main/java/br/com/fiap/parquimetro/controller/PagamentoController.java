@@ -28,6 +28,7 @@ public class PagamentoController {
 
     @PostMapping
     public ResponseEntity<PagamentoDTO> save(@RequestBody PagamentoDTO pagamentoDTO) {
+        pagamentoDTO = pagamentoService.save(pagamentoDTO);
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(pagamentoDTO);
     }
 

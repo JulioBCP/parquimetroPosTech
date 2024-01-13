@@ -1,17 +1,14 @@
 package br.com.fiap.parquimetro.entities.pagamento;
 
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
+public enum ModalidadeTempoEnum {
 
-public enum FormaDePagamentoEnum {
-
-    CREDITO(1, "Cartao de Credito"),
-    DEBITO(2, "Cartao de Debito"),
-    PIX(3, "Pix");
+    TEMPO_FIXO(1, "Contabilizacao de tempo pre-fixado pelo cliente"),
+    TEMPO_VARIAVEL(2, "Contabilizacao de tempo por hora");
 
     private int id;
     private String descricao;
 
-    FormaDePagamentoEnum(int id, String descricao) {
+    ModalidadeTempoEnum(int id, String descricao) {
         this.id = id;
         this.descricao = descricao;
     }
@@ -23,5 +20,4 @@ public enum FormaDePagamentoEnum {
     public String getDescricao() {
         return descricao;
     }
-
 }
