@@ -19,4 +19,9 @@ public interface CalculoPagamentoRepository extends JpaRepository<CalculoPagamen
     @Transactional
     @Query("update CalculoPagamento p set p.flagAlerta=1 where p.id=(:id)")
     void setarAlerta(Long id);
+
+    @Modifying
+    @Transactional
+    @Query("update CalculoPagamento p set p.tempoEmHoras=:tempo where p.id=:id")
+    void aumentarTempo(Long id, Long tempo);
 }

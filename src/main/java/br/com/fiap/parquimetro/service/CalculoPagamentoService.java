@@ -119,4 +119,8 @@ public class CalculoPagamentoService {
     public void setarAlerta(Long id) {
         calculoPagamentoRepository.setarAlerta(id);
     }
+
+    public void aumentarTempo(Long id, Long tempo) {
+        calculoPagamentoRepository.aumentarTempo(id, tempo);
+    }
 }

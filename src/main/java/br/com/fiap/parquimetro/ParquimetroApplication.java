@@ -72,7 +72,27 @@ public class ParquimetroApplication implements CommandLineRunner {
 			}
 
 			private void emiteTempoVarivel(CalculoPagamento batida) {
+				LocalDateTime tempoAtual = LocalDateTime.now();
+				LocalDateTime tempoBatida = batida.getHorarioEntrada();
 
+				//Só testa de data mes e ano forem iguais
+				if (tempoAtual.getDayOfMonth() == tempoBatida.getDayOfMonth()
+						&& tempoAtual.getMonth() == tempoBatida.getMonth()
+						&& tempoAtual.getYear() == tempoBatida.getYear()) {
+
+					Long minutosBatida = (batida.getTempoEmHoras() * 60)
+							+ (tempoBatida.getHour() * 60)
+							+ tempoBatida.getMinute();
+
+					Long minutosAtual = (long) (tempoAtual.getHour() * 60
+							+ tempoAtual.getMinute());
+
+					if (minutosBatida - minutosAtual < 0) {
+						System.out.println("Tempo será incrementado - email enviado para : "
+								+ batida.getCarro().getPessoa().getEmail());
+						calculoPagamentoService.aumentarTempo(batida.getId(), batida.getTempoEmHoras() + 1);
+					}
+				}
 			}
 		};
 		timer.scheduleAtFixedRate(tarefa, 0, SEGUNDOS);
