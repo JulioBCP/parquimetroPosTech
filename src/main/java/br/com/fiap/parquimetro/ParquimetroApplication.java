@@ -30,7 +30,10 @@ public class ParquimetroApplication implements CommandLineRunner {
 			@Override
 			public void run() {
 				List<CalculoPagamento> listaAberto = calculoPagamentoService.buscaEmAberto();
-				System.out.println(listaAberto.get(0).getHorarioEntrada());
+				if (listaAberto != null && !listaAberto.isEmpty() ) {
+					//**** Aqui vai varrer a lista para avisar os condutores do tempo em aberto
+					System.out.println(listaAberto.get(0).getHorarioEntrada());
+				}
 			}
 		};
 		timer.scheduleAtFixedRate(tarefa, 0, SEGUNDOS);
