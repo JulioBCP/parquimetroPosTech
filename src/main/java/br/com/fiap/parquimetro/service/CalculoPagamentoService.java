@@ -4,13 +4,14 @@ import br.com.fiap.parquimetro.ControllerNotFoundException;
 import br.com.fiap.parquimetro.dto.CalculoPagamentoDTO;
 import br.com.fiap.parquimetro.entities.pagamento.CalculoPagamento;
 import br.com.fiap.parquimetro.repository.CalculoPagamentoRepository;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,6 +83,7 @@ public class CalculoPagamentoService {
     }
 
     public void delete(Long id) {
+
         calculoPagamentoRepository.deleteById(id);
     }
 
@@ -109,4 +111,9 @@ public class CalculoPagamentoService {
     private long calculoTempo(LocalDateTime horarioEntrada, LocalDateTime horarioSaida) {
         return Duration.between(horarioEntrada, horarioSaida).toHours();
     }
+
+    public List<CalculoPagamento> buscaEmAberto() {
+        return calculoPagamentoRepository.findPagamentosNulos();
+    }
+
 }
