@@ -116,4 +116,7 @@ public class CalculoPagamentoService {
         return calculoPagamentoRepository.findPagamentosNulos();
     }
 
+    public void setarAlerta(Long id) {
+        calculoPagamentoRepository.setarAlerta(id);
+    }
 }

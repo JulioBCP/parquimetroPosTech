@@ -20,6 +20,8 @@ public class CalculoPagamento {
 
     private long tempoEmHoras;
 
+    private int flagAlerta;
+
     @OneToOne
     @JoinColumn(name = "id_carro")
     private Carro carro;
@@ -108,4 +110,13 @@ public class CalculoPagamento {
                 ", modalidadeTempoEnum=" + modalidadeTempoEnum +
                 '}';
     }
+
+    public int getFlagAlerta() {
+        return flagAlerta;
+    }
+
+    public void setFlagAlerta(int flagAlerta) {
+        this.flagAlerta = flagAlerta;
+    }
+
 }
