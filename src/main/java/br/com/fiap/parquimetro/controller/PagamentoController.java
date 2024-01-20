@@ -32,7 +32,7 @@ public class PagamentoController {
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(pagamentoDTO);
     }
 
-    @PutMapping
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         pagamentoService.delete(id);
         return ResponseEntity.noContent().build();
