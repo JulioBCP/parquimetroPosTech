@@ -3,7 +3,6 @@ package br.com.fiap.parquimetro.entities;
 import br.com.fiap.parquimetro.entities.pagamento.Cartao;
 import br.com.fiap.parquimetro.entities.pagamento.FormaDePagamentoEnum;
 import br.com.fiap.parquimetro.entities.pagamento.ModalidadeTempoEnum;
-import br.com.fiap.parquimetro.entities.pagamento.Pix;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
