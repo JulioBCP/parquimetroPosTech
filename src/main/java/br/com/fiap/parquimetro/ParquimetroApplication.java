@@ -1,8 +1,8 @@
 package br.com.fiap.parquimetro;
 
-import br.com.fiap.parquimetro.entities.pagamento.CalculoPagamento;
+import br.com.fiap.parquimetro.entities.Estacionamento;
 import br.com.fiap.parquimetro.entities.pagamento.ModalidadeTempoEnum;
-import br.com.fiap.parquimetro.service.CalculoPagamentoService;
+import br.com.fiap.parquimetro.service.EstacionamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +19,7 @@ import java.util.TimerTask;
 @SpringBootApplication
 public class ParquimetroApplication implements CommandLineRunner {
 	@Autowired
-	private CalculoPagamentoService calculoPagamentoService;
+	private EstacionamentoService estacionamentoService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ParquimetroApplication.class, args);
@@ -33,9 +33,9 @@ public class ParquimetroApplication implements CommandLineRunner {
 		TimerTask tarefa = new TimerTask() {
 			@Override
 			public void run() {
-				List<CalculoPagamento> listaAberto = calculoPagamentoService.buscaEmAberto();
+				List<Estacionamento> listaAberto = estacionamentoService.buscaEmAberto();
 				if (listaAberto != null && !listaAberto.isEmpty() ) {
-					for (CalculoPagamento batida : listaAberto) {
+					for (Estacionamento batida : listaAberto) {
 						if (batida.getModalidadeTempoEnum()
 								.equals(ModalidadeTempoEnum.TEMPO_FIXO)) {
 							emiteTempoFixo(batida);
@@ -46,7 +46,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 				}
 			}
 
-			private void emiteTempoFixo(CalculoPagamento batida) {
+			private void emiteTempoFixo(Estacionamento batida) {
 				LocalDateTime tempoAtual = LocalDateTime.now();
 				LocalDateTime tempoBatida = batida.getHorarioEntrada();
 
@@ -66,12 +66,12 @@ public class ParquimetroApplication implements CommandLineRunner {
 							&& batida.getFlagAlerta()==0) {
 						System.out.println("Tempo está expirando - email enviado para : "
 								+ batida.getCarro().getPessoa().getEmail());
-						calculoPagamentoService.setarAlerta(batida.getId());
+						estacionamentoService.setarAlerta(batida.getId());
 					}
 				}
 			}
 
-			private void emiteTempoVarivel(CalculoPagamento batida) {
+			private void emiteTempoVarivel(Estacionamento batida) {
 				LocalDateTime tempoAtual = LocalDateTime.now();
 				LocalDateTime tempoBatida = batida.getHorarioEntrada();
 
@@ -90,7 +90,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 					if (minutosBatida - minutosAtual < 0) {
 						System.out.println("Tempo será incrementado - email enviado para : "
 								+ batida.getCarro().getPessoa().getEmail());
-						calculoPagamentoService.aumentarTempo(batida.getId(), batida.getTempoEmHoras() + 1);
+						estacionamentoService.aumentarTempo(batida.getId(), batida.getTempoEmHoras() + 1);
 					}
 				}
 			}

@@ -38,6 +38,8 @@ public class Estacionamento {
     @JoinColumn(name = "cartao_id")
     private Cartao cartao;
 
+    private int flagAlerta;
+
     public Estacionamento() {}
 
     public Estacionamento(Long id, Carro carro, LocalDateTime horarioEntrada, LocalDateTime horarioSaida,
@@ -135,6 +137,14 @@ public class Estacionamento {
         this.cartao = cartao;
     }
 
+    public int getFlagAlerta() {
+        return flagAlerta;
+    }
+
+    public void setFlagAlerta(int flagAlerta) {
+        this.flagAlerta = flagAlerta;
+    }
+
     @Override
     public String toString() {
         return "Estacionamento{" +
@@ -148,6 +158,7 @@ public class Estacionamento {
                 ", formaDePagamentoEnum=" + formaDePagamentoEnum +
                 ", chavePix='" + chavePix + '\'' +
                 ", cartao=" + cartao +
+                ", flagAlerta=" + flagAlerta +
                 '}';
     }
 }

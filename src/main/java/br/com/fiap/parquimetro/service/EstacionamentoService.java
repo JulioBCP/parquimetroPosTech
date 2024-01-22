@@ -3,6 +3,7 @@ package br.com.fiap.parquimetro.service;
 import br.com.fiap.parquimetro.ControllerNotFoundException;
 import br.com.fiap.parquimetro.dto.EstacionamentoDTO;
 import br.com.fiap.parquimetro.entities.Estacionamento;
+import br.com.fiap.parquimetro.entities.pagamento.CalculoPagamento;
 import br.com.fiap.parquimetro.entities.pagamento.ModalidadeTempoEnum;
 import br.com.fiap.parquimetro.repository.EstacionamentoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,6 +14,7 @@ import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -128,6 +130,18 @@ public class EstacionamentoService {
         } else {
             return tempoEmHoras * VALOR_MINUTO_VARIAVEL;
         }
+    }
+
+    public List<Estacionamento> buscaEmAberto() {
+        return estacionamentoRepository.findPagamentosNulos();
+    }
+
+    public void setarAlerta(Long id) {
+        estacionamentoRepository.setarAlerta(id);
+    }
+
+    public void aumentarTempo(Long id, Long tempo) {
+        estacionamentoRepository.aumentarTempo(id, tempo);
     }
 
 }
