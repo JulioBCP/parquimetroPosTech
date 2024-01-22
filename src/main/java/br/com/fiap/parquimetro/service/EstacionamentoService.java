@@ -3,7 +3,6 @@ package br.com.fiap.parquimetro.service;
 import br.com.fiap.parquimetro.ControllerNotFoundException;
 import br.com.fiap.parquimetro.dto.EstacionamentoDTO;
 import br.com.fiap.parquimetro.entities.Estacionamento;
-import br.com.fiap.parquimetro.entities.pagamento.CalculoPagamento;
 import br.com.fiap.parquimetro.entities.pagamento.ModalidadeTempoEnum;
 import br.com.fiap.parquimetro.repository.EstacionamentoRepository;
 import jakarta.persistence.EntityNotFoundException;

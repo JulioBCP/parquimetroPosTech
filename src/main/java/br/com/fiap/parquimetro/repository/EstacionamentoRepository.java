@@ -1,7 +1,6 @@
 package br.com.fiap.parquimetro.repository;
 
 import br.com.fiap.parquimetro.entities.Estacionamento;
-import br.com.fiap.parquimetro.entities.pagamento.CalculoPagamento;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
