@@ -1,7 +1,5 @@
 package br.com.fiap.parquimetro.entities.pagamento;
 
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
-
 public enum FormaDePagamentoEnum {
 
     CREDITO(1, "Cartao de Credito"),

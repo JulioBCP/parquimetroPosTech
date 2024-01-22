@@ -3,7 +3,7 @@ package br.com.fiap.parquimetro.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="tb-carros")
+@Table(name="tb_carros")
 public class Carro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
