@@ -8,9 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -55,7 +53,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 					&& tempoAtual.getMonth() == tempoBatida.getMonth()
 						&& tempoAtual.getYear() == tempoBatida.getYear()) {
 
-					Long minutosBatida = (batida.getTempoEmHoras() * 60)
+					Long minutosBatida = batida.getTempoEmHoras()
 							+ (tempoBatida.getHour() * 60)
 							+ tempoBatida.getMinute();
 
@@ -80,7 +78,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 						&& tempoAtual.getMonth() == tempoBatida.getMonth()
 						&& tempoAtual.getYear() == tempoBatida.getYear()) {
 
-					Long minutosBatida = (batida.getTempoEmHoras() * 60)
+					Long minutosBatida = batida.getTempoEmHoras()
 							+ (tempoBatida.getHour() * 60)
 							+ tempoBatida.getMinute();
 
@@ -90,7 +88,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 					if (minutosBatida - minutosAtual < 0) {
 						System.out.println("Tempo será incrementado - email enviado para : "
 								+ batida.getCarro().getPessoa().getEmail());
-						estacionamentoService.aumentarTempo(batida.getId(), batida.getTempoEmHoras() + 1);
+						estacionamentoService.aumentarTempo(batida.getId(), batida.getTempoEmHoras() + 60);
 					}
 				}
 			}
