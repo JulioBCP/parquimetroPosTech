@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  db:
+    image: "mariadb:10.5.8"
+    restart: always
+    environment:
+      MYSQL_DATABASE: parquimetro
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3307:3306
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

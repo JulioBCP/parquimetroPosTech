@@ -6,6 +6,4 @@ public record CarroDTO(
         Long id,
         String placa,
         Pessoa pessoa
-) {
-
-}
+) {}
