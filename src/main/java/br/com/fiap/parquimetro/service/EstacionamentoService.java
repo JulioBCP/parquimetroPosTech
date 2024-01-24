@@ -135,12 +135,18 @@ public class EstacionamentoService {
         return estacionamentoRepository.findPagamentosNulos();
     }
 
-    public void setarAlerta(Long id) {
-        estacionamentoRepository.setarAlerta(id);
+    public void setarAlerta(Estacionamento batida) {
+        System.out.println("Tempo está expirando - email enviado para : "
+                + batida.getCarro().getPessoa().getEmail());
+
+        estacionamentoRepository.setarAlerta(batida.getId());
     }
 
-    public void aumentarTempo(Long id, Long tempo) {
-        estacionamentoRepository.aumentarTempo(id, tempo);
+    public void aumentarTempo(Estacionamento batida) {
+        System.out.println("Tempo será incrementado - email enviado para : "
+                + batida.getCarro().getPessoa().getEmail());
+
+        estacionamentoRepository.aumentarTempo(batida.getId(), batida.getTempoEmHoras() + 60);
     }
 
 }

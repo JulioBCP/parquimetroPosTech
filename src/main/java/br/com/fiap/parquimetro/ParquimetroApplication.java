@@ -3,6 +3,7 @@ package br.com.fiap.parquimetro;
 import br.com.fiap.parquimetro.entities.Estacionamento;
 import br.com.fiap.parquimetro.entities.pagamento.ModalidadeTempoEnum;
 import br.com.fiap.parquimetro.service.EstacionamentoService;
+import br.com.fiap.parquimetro.service.JavaMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,11 +14,15 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+//eduardojacobsenguerra@outlook.com
+//Juventude@Papo123
 @SpringBootApplication
 public class ParquimetroApplication implements CommandLineRunner {
 	@Autowired
 	private EstacionamentoService estacionamentoService;
+
+	@Autowired
+	private JavaMailService emailService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ParquimetroApplication.class, args);
@@ -25,6 +30,10 @@ public class ParquimetroApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+//		emailService.sendSimpleMessage("edujguerra@gmail.com",
+//				"Teste de Email"
+//				, "Esse é uma email teste");
+
 		Timer timer = new Timer();
 
 		final long SEGUNDOS = 1000;
@@ -62,9 +71,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 
 					if (minutosBatida - minutosAtual <= 15
 							&& batida.getFlagAlerta()==0) {
-						System.out.println("Tempo está expirando - email enviado para : "
-								+ batida.getCarro().getPessoa().getEmail());
-						estacionamentoService.setarAlerta(batida.getId());
+						estacionamentoService.setarAlerta(batida);
 					}
 				}
 			}
@@ -86,9 +93,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 							+ tempoAtual.getMinute());
 
 					if (minutosBatida - minutosAtual < 0) {
-						System.out.println("Tempo será incrementado - email enviado para : "
-								+ batida.getCarro().getPessoa().getEmail());
-						estacionamentoService.aumentarTempo(batida.getId(), batida.getTempoEmHoras() + 60);
+						estacionamentoService.aumentarTempo(batida);
 					}
 				}
 			}
