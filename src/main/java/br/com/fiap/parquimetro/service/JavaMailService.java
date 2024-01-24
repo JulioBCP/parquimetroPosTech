@@ -52,7 +52,7 @@ public class JavaMailService {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
         cfg.setClassForTemplateLoading(FreeMarkerConfig.class, "../mail-templates/");
 
-        Template freemarkerTemplate = cfg.getTemplate("TesteTemplate.ftl");
+        Template freemarkerTemplate = cfg.getTemplate("ReciboTemplate.ftl");
 
         StringWriter writer = new StringWriter();
         freemarkerTemplate.process(map, writer);
