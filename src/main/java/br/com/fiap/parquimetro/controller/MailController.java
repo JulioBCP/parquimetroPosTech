@@ -44,8 +44,8 @@ public class MailController {
         Map<String,Object> template = new HashMap<>();
         LocalDateTime diaAtual = LocalDateTime.now();
 		template.put("dia", diaAtual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		template.put("chegada", body.horarioEntrada());
-		template.put("saida", body.horarioSaida());
+		template.put("chegada", body.horarioEntrada().format(DateTimeFormatter.ofPattern("HH:mm")));
+		template.put("saida", body.horarioSaida().format(DateTimeFormatter.ofPattern("HH:mm")));
         template.put("valor", body.valorPagamento());
 
         try{
