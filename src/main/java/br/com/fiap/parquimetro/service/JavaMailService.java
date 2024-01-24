@@ -64,7 +64,7 @@ public class JavaMailService {
 public void sendmailTemplateTeste() throws Exception{
 		String to = "thiagorv169572@gmail.com";
 		String subject = "Recibo parquimetro";
-        // 	String text = "Recibo parquimetro";
+
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("dia", "22/01/2024");
 		map.put("chegada", "22:41");
