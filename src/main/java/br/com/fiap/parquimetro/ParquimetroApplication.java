@@ -21,19 +21,12 @@ public class ParquimetroApplication implements CommandLineRunner {
 	@Autowired
 	private EstacionamentoService estacionamentoService;
 
-	@Autowired
-	private JavaMailService emailService;
-
 	public static void main(String[] args) {
 		SpringApplication.run(ParquimetroApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-//		emailService.sendSimpleMessage("edujguerra@gmail.com",
-//				"Teste de Email"
-//				, "Esse é uma email teste");
-
 		Timer timer = new Timer();
 
 		final long SEGUNDOS = 1000;
@@ -72,6 +65,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 					if (minutosBatida - minutosAtual <= 15
 							&& batida.getFlagAlerta()==0) {
 						estacionamentoService.setarAlerta(batida);
+
 					}
 				}
 			}

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class Estacionamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne

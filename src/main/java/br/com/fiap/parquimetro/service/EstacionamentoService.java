@@ -12,9 +12,12 @@ import org.springframework.stereotype.Service;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_TIME;
 
 @Service
 public class EstacionamentoService {
@@ -24,6 +27,10 @@ public class EstacionamentoService {
 
     @Autowired
     EstacionamentoRepository estacionamentoRepository;
+
+    @Autowired
+    private JavaMailService emailService;
+
 
     public Collection<EstacionamentoDTO> findAll() {
         var estacionamento = estacionamentoRepository.findAll();
@@ -136,6 +143,27 @@ public class EstacionamentoService {
     }
 
     public void setarAlerta(Estacionamento batida) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String parsedEntrada = batida.getHorarioEntrada().format(formatter);
+        String parsedSaida = batida.getHorarioEntrada().plusMinutes(batida.getTempoEmHoras()).format(formatter);
+
+		emailService.sendSimpleMessage(batida.getCarro().getPessoa().getEmail(),
+				"[Parkimetro] Seu tempo de estacionamento está expirando !"
+				, "Prezado condutor(a) " + batida.getCarro().getPessoa().getNome()
+                        + "\n\n"
+                        +  "Você estacionou seu veículo de placa " + batida.getCarro().getPlaca()
+                        + "\n"
+                        + "e segundo nosso sistema, seu tempo está expirando."
+                        + "\n"
+                        + "Favor renovar o estacionamento."
+                        + "\n\n"
+                        + "Horário de Entrada: " + parsedEntrada
+                        + "\n"
+                        + "Término do Prazo: " + parsedSaida
+                        + "\n\n\n"
+                        + "(** Essa é uma mensagem automática. Caso já tenha finalizado seu estacionamento, favor ignorar **)"
+        ) ;
+
         System.out.println("Tempo está expirando - email enviado para : "
                 + batida.getCarro().getPessoa().getEmail());
 
@@ -143,6 +171,27 @@ public class EstacionamentoService {
     }
 
     public void aumentarTempo(Estacionamento batida) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String parsedEntrada = batida.getHorarioEntrada().format(formatter);
+        String parsedSaida = batida.getHorarioEntrada().plusMinutes(60).format(formatter);
+
+        emailService.sendSimpleMessage(batida.getCarro().getPessoa().getEmail(),
+                "[Parkimetro] Seu tempo de estacionamento expirou !"
+                , "Prezado condutor(a) " + batida.getCarro().getPessoa().getNome()
+                        + "\n\n"
+                        +  "Você estacionou seu veículo de placa " + batida.getCarro().getPlaca()
+                        + "\n"
+                        + "e segundo nosso sistema, seu tempo expirou."
+                        + "\n"
+                        + "O sistema irá renovar automaticamente seu prazo de estacionamento."
+                        + "\n\n"
+                        + "Horário de Entrada: " + parsedEntrada
+                        + "\n"
+                        + "Novo Prazo: " + parsedSaida
+                        + "\n\n\n"
+                        + "(** Essa é uma mensagem automática. Caso já tenha finalizado seu estacionamento, favor ignorar **)"
+        ) ;
+
         System.out.println("Tempo será incrementado - email enviado para : "
                 + batida.getCarro().getPessoa().getEmail());
 
