@@ -55,7 +55,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 					&& tempoAtual.getMonth() == tempoBatida.getMonth()
 						&& tempoAtual.getYear() == tempoBatida.getYear()) {
 
-					Long minutosBatida = batida.getTempoEmHoras()
+					double minutosBatida = batida.getTempoEmHoras()
 							+ (tempoBatida.getHour() * 60)
 							+ tempoBatida.getMinute();
 
@@ -79,7 +79,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 						&& tempoAtual.getMonth() == tempoBatida.getMonth()
 						&& tempoAtual.getYear() == tempoBatida.getYear()) {
 
-					Long minutosBatida = batida.getTempoEmHoras()
+					double minutosBatida = batida.getTempoEmHoras()
 							+ (tempoBatida.getHour() * 60)
 							+ tempoBatida.getMinute();
 

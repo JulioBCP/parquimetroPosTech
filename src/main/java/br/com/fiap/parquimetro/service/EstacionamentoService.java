@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class EstacionamentoService {
 
     private static final double VALOR_HORA_FIXO = 7;
-    private static final double VALOR_MINUTO_VARIAVEL = (10.0/60.0);
+    private static final double VALOR_MINUTO_VARIAVEL = 10.00;
 
     @Autowired
     EstacionamentoRepository estacionamentoRepository;
@@ -76,8 +76,7 @@ public class EstacionamentoService {
                 estacionamento.setTempoEmHoras(calculoTempo(estacionamento.getHorarioEntrada(), estacionamento.getHorarioSaida()));
             }
             double valor = calculoValorPagamento(estacionamento.getModalidadeTempoEnum(), estacionamento.getTempoEmHoras());
-            double valorFormatado = Math.round(valor * 100.0) / 100.0;
-            estacionamento.setValorPagamento(valorFormatado);
+            estacionamento.setValorPagamento(valor);
             estacionamento.setFormaDePagamentoEnum(estacionamentoDTO.formaDePagamentoEnum());
             estacionamento.setChavePix(estacionamentoDTO.chavePix());
             estacionamento.setCartao(estacionamentoDTO.cartao());
@@ -129,12 +128,13 @@ public class EstacionamentoService {
         );
     }
 
-    private long calculoTempo(LocalDateTime horarioEntrada, LocalDateTime horarioSaida) {
-        long tempo = Duration.between(horarioEntrada, horarioSaida).toMinutes();
+    private double calculoTempo(LocalDateTime horarioEntrada, LocalDateTime horarioSaida) {
+        double tempo = Duration.between(horarioEntrada, horarioSaida).toMinutes() / 60.0;
+
         return tempo;
     }
 
-    private double calculoValorPagamento(ModalidadeTempoEnum modalidadeTempo, long tempoEmHoras) {
+    private double calculoValorPagamento(ModalidadeTempoEnum modalidadeTempo, double tempoEmHoras) {
 
         if(modalidadeTempo == ModalidadeTempoEnum.TEMPO_FIXO) {
             return tempoEmHoras * VALOR_HORA_FIXO;
@@ -160,7 +160,7 @@ public class EstacionamentoService {
     public void setarAlerta(Estacionamento batida) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         String parsedEntrada = batida.getHorarioEntrada().format(formatter);
-        String parsedSaida = batida.getHorarioEntrada().plusMinutes(batida.getTempoEmHoras()).format(formatter);
+        String parsedSaida = batida.getHorarioEntrada().plusMinutes((long) batida.getTempoEmHoras()).format(formatter);
 
 		emailService.sendSimpleMessage(batida.getCarro().getPessoa().getEmail(),
 				"[Parkimetro] Seu tempo de estacionamento está expirando !"

@@ -13,7 +13,7 @@ public record EstacionamentoDTO(
         LocalDateTime horarioEntrada,
         LocalDateTime horarioSaida,
         ModalidadeTempoEnum modalidadeTempoEnum,
-        long tempoEmHoras,
+        double tempoEmHoras,
         double valorPagamento,
         FormaDePagamentoEnum formaDePagamentoEnum,
         String chavePix,

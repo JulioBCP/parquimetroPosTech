@@ -25,7 +25,7 @@ public class Estacionamento {
 
     private ModalidadeTempoEnum modalidadeTempoEnum;
 
-    private long tempoEmHoras;
+    private double tempoEmHoras;
 
     private double valorPagamento;
 
@@ -42,7 +42,7 @@ public class Estacionamento {
     public Estacionamento() {}
 
     public Estacionamento(Long id, Carro carro, LocalDateTime horarioEntrada, LocalDateTime horarioSaida,
-                          ModalidadeTempoEnum modalidadeTempoEnum, long tempoEmHoras, double valorPagamento,
+                          ModalidadeTempoEnum modalidadeTempoEnum, double tempoEmHoras, double valorPagamento,
                           FormaDePagamentoEnum formaDePagamentoEnum, String chavePix, Cartao cartao) {
         this.id = id;
         this.carro = carro;
@@ -96,11 +96,11 @@ public class Estacionamento {
         this.modalidadeTempoEnum = modalidadeTempoEnum;
     }
 
-    public long getTempoEmHoras() {
+    public double getTempoEmHoras() {
         return tempoEmHoras;
     }
 
-    public void setTempoEmHoras(long tempoEmHoras) {
+    public void setTempoEmHoras(double tempoEmHoras) {
         this.tempoEmHoras = tempoEmHoras;
     }
 

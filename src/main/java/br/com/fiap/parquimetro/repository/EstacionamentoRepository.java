@@ -23,5 +23,5 @@ public interface EstacionamentoRepository extends JpaRepository<Estacionamento, 
     @Modifying
     @Transactional
     @Query("update Estacionamento p set p.tempoEmHoras=:tempo where p.id=:id")
-    void aumentarTempo(Long id, Long tempo);
+    void aumentarTempo(Long id, double tempo);
 }
