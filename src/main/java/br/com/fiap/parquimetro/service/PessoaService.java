@@ -20,7 +20,7 @@ public class PessoaService {
         var pessoas = repo.findAll();
         return pessoas
                 .stream()
-                .map(this::toPessoaDTO)        //Transforma cada produto em ProdutoDTO
+                .map(this::toPessoaDTO)        //Transforma cada pessoa em PessoaDTO
                 .collect(Collectors.toList());  //Devolve a Lista
     }
 

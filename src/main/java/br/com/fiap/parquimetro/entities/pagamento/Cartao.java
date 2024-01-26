@@ -1,5 +1,6 @@
 package br.com.fiap.parquimetro.entities.pagamento;
 
+import br.com.fiap.parquimetro.util.PagamentoNaoRealizadoException;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -95,4 +96,13 @@ public class Cartao {
                 ", ccv=" + ccv +
                 '}';
     }
+
+    public static boolean cartaoComCamposValidos(Cartao cartao) {
+        return cartao.getId() != null
+                && cartao.getNomeNoCartao() != null && !cartao.getNomeNoCartao().isBlank()
+                && cartao.getNumeroCartao() != null && !cartao.getNumeroCartao().isBlank() && cartao.getNumeroCartao().length() == 16
+                && !String.valueOf(cartao.getCcv()).isBlank() && String.valueOf(cartao.getCcv()).length() == 3
+                && cartao.getDataValidade() != null && cartao.getDataValidade().isAfter(LocalDate.now());
+    }
+
 }

@@ -1,5 +1,6 @@
 package br.com.fiap.parquimetro.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.parquimetro.dto.MailEstacionamentoDTO;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
 @RequestMapping("mail")
+@Hidden
 public class MailController {
     @Autowired
     JavaMailService emailService;

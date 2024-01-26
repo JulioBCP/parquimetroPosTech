@@ -3,21 +3,21 @@ package br.com.fiap.parquimetro.service;
 import br.com.fiap.parquimetro.ControllerNotFoundException;
 import br.com.fiap.parquimetro.dto.EstacionamentoDTO;
 import br.com.fiap.parquimetro.entities.Estacionamento;
+import br.com.fiap.parquimetro.entities.pagamento.Cartao;
+import br.com.fiap.parquimetro.entities.pagamento.FormaDePagamentoEnum;
 import br.com.fiap.parquimetro.entities.pagamento.ModalidadeTempoEnum;
 import br.com.fiap.parquimetro.repository.EstacionamentoRepository;
+import br.com.fiap.parquimetro.util.PagamentoNaoRealizadoException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_TIME;
 
 @Service
 public class EstacionamentoService {
@@ -82,10 +82,14 @@ public class EstacionamentoService {
             estacionamento.setChavePix(estacionamentoDTO.chavePix());
             estacionamento.setCartao(estacionamentoDTO.cartao());
 
-            estacionamentoRepository.save(estacionamento);
+            boolean isPagamentoRealizado = verificarPagamento(estacionamento);
 
-            return toEstacionamentoDTO(estacionamento);
-
+            if (isPagamentoRealizado) {
+                estacionamentoRepository.save(estacionamento);
+                return toEstacionamentoDTO(estacionamento);
+            } else {
+                throw new PagamentoNaoRealizadoException("Estacionamento não pode ser finalizado! Por favor verifique os dados de pagamento.");
+            }
         } catch (EntityNotFoundException e) {
             throw new ControllerNotFoundException("Não foi possivel finalizar o estacionamento com id: " + id);
         }
@@ -126,7 +130,8 @@ public class EstacionamentoService {
     }
 
     private long calculoTempo(LocalDateTime horarioEntrada, LocalDateTime horarioSaida) {
-        return Duration.between(horarioEntrada, horarioSaida).toMinutes();
+        long tempo = Duration.between(horarioEntrada, horarioSaida).toMinutes();
+        return tempo;
     }
 
     private double calculoValorPagamento(ModalidadeTempoEnum modalidadeTempo, long tempoEmHoras) {
@@ -136,6 +141,16 @@ public class EstacionamentoService {
         } else {
             return tempoEmHoras * VALOR_MINUTO_VARIAVEL;
         }
+    }
+
+    private  boolean verificarPagamento(Estacionamento estacionamento) {
+        if (estacionamento.getFormaDePagamentoEnum() == FormaDePagamentoEnum.PIX) {
+            return (estacionamento.getChavePix() != null && !estacionamento.getChavePix().isBlank());
+        } else if (estacionamento.getFormaDePagamentoEnum() == FormaDePagamentoEnum.CREDITO
+                || estacionamento.getFormaDePagamentoEnum() == FormaDePagamentoEnum.DEBITO) {
+            return Cartao.cartaoComCamposValidos(estacionamento.getCartao());
+        }
+        return false;
     }
 
     public List<Estacionamento> buscaEmAberto() {

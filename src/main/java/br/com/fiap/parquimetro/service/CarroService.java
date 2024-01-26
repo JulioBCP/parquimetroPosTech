@@ -20,7 +20,7 @@ public class CarroService {
         var carros = repo.findAll();
         return carros
                 .stream()
-                .map(this::toCarroDTO)        //Transforma cada produto em ProdutoDTO
+                .map(this::toCarroDTO)        //Transforma cada carro em CarroDTO
                 .collect(Collectors.toList());  //Devolve a Lista
     }
 
