@@ -49,9 +49,8 @@ public class JavaMailService {
             throws IOException, TemplateException, MessagingException {
             
 
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
-        cfg.setClassForTemplateLoading(FreeMarkerConfig.class, "../mail-templates/");
-
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
+        cfg.setClassForTemplateLoading(FreeMarkerConfig.class, "/templates/email/");
         Template freemarkerTemplate = cfg.getTemplate("ReciboTemplate.ftl");
 
         StringWriter writer = new StringWriter();

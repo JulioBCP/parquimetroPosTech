@@ -15,8 +15,8 @@ public class Estacionamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "id_carro")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_Carro", nullable = false)
     private Carro carro;
 
     private LocalDateTime horarioEntrada;
