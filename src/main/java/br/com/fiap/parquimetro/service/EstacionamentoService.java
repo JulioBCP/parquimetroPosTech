@@ -160,11 +160,11 @@ public class EstacionamentoService {
     public void setarAlerta(Estacionamento batida) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         String parsedEntrada = batida.getHorarioEntrada().format(formatter);
-        String parsedSaida = batida.getHorarioEntrada().plusMinutes((long) batida.getTempoEmHoras()).format(formatter);
+        String parsedSaida = batida.getHorarioEntrada().plusMinutes((long) batida.getTempoEmHoras() * 60).format(formatter);
 
 		emailService.sendSimpleMessage(batida.getCarro().getPessoa().getEmail(),
-				"[Parkimetro] Seu tempo de estacionamento está expirando !"
-				, "Prezado condutor(a) " + batida.getCarro().getPessoa().getNome()
+				"[FIAP Parquímetro] Seu tempo de estacionamento está expirando !"
+				, "Prezado(a) condutor(a) " + batida.getCarro().getPessoa().getNome()
                         + "\n\n"
                         +  "Você estacionou seu veículo de placa " + batida.getCarro().getPlaca()
                         + "\n"
@@ -188,11 +188,11 @@ public class EstacionamentoService {
     public void aumentarTempo(Estacionamento batida) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         String parsedEntrada = batida.getHorarioEntrada().format(formatter);
-        String parsedSaida = batida.getHorarioEntrada().plusMinutes(60).format(formatter);
+        String parsedSaida = batida.getHorarioEntrada().plusMinutes((long) ((batida.getTempoEmHoras() + 1)*60)).format(formatter);
 
         emailService.sendSimpleMessage(batida.getCarro().getPessoa().getEmail(),
-                "[Parkimetro] Seu tempo de estacionamento expirou !"
-                , "Prezado condutor(a) " + batida.getCarro().getPessoa().getNome()
+                "[FIAP Parquímetro] Seu tempo de estacionamento expirou !"
+                , "Prezado(a) condutor(a) " + batida.getCarro().getPessoa().getNome()
                         + "\n\n"
                         +  "Você estacionou seu veículo de placa " + batida.getCarro().getPlaca()
                         + "\n"
@@ -210,7 +210,7 @@ public class EstacionamentoService {
         System.out.println("Tempo será incrementado - email enviado para : "
                 + batida.getCarro().getPessoa().getEmail());
 
-        estacionamentoRepository.aumentarTempo(batida.getId(), batida.getTempoEmHoras() + 60);
+        estacionamentoRepository.aumentarTempo(batida.getId(), batida.getTempoEmHoras() + 1);
     }
 
 }

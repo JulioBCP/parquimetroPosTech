@@ -40,7 +40,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 								.equals(ModalidadeTempoEnum.TEMPO_FIXO)) {
 							emiteTempoFixo(batida);
 						} else {
-							emiteTempoVarivel(batida);
+							emiteTempoVariavel(batida);
 						}
 					}
 				}
@@ -55,7 +55,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 					&& tempoAtual.getMonth() == tempoBatida.getMonth()
 						&& tempoAtual.getYear() == tempoBatida.getYear()) {
 
-					double minutosBatida = batida.getTempoEmHoras()
+					double minutosBatida = batida.getTempoEmHoras() * 60
 							+ (tempoBatida.getHour() * 60)
 							+ tempoBatida.getMinute();
 
@@ -70,7 +70,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 				}
 			}
 
-			private void emiteTempoVarivel(Estacionamento batida) {
+			private void emiteTempoVariavel(Estacionamento batida) {
 				LocalDateTime tempoAtual = LocalDateTime.now();
 				LocalDateTime tempoBatida = batida.getHorarioEntrada();
 
@@ -79,7 +79,7 @@ public class ParquimetroApplication implements CommandLineRunner {
 						&& tempoAtual.getMonth() == tempoBatida.getMonth()
 						&& tempoAtual.getYear() == tempoBatida.getYear()) {
 
-					double minutosBatida = batida.getTempoEmHoras()
+					double minutosBatida = batida.getTempoEmHoras() * 60
 							+ (tempoBatida.getHour() * 60)
 							+ tempoBatida.getMinute();
 
@@ -94,6 +94,4 @@ public class ParquimetroApplication implements CommandLineRunner {
 		};
 		timer.scheduleAtFixedRate(tarefa, 0, SEGUNDOS);
 	}
-
-
 }
