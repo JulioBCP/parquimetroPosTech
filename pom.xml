@@ -40,12 +40,14 @@
 			<artifactId>spring-context</artifactId>
 			<version>6.0.11</version>
 		</dependency>
+
+		
         <!-- send email -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-		<!-- Swagger -->
+
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
